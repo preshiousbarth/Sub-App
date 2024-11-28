@@ -1,0 +1,117 @@
+.purchases-container {
+    padding: 2rem;
+    font-family: Arial, sans-serif;
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+  }
+  
+  table th, table td {
+    border: 1px solid #ddd;
+    padding: 0.8rem;
+    text-align: center;
+  }
+  
+  table th {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+
+  /* Media Queries for Responsiveness */
+@media (min-width: 768px) {
+  .blog-posts {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .header h1 {
+    font-size: 3rem;
+  }
+
+  .header p {
+    font-size: 1.5rem;
+  }
+}
+
+/* Media Queries for Responsiveness */
+
+/* For Small Screens (Mobile) */
+@media (max-width: 767px) {
+  .header h1 {
+    font-size: 2rem; /* Smaller font for small screens */
+  }
+
+  .header p {
+    font-size: 1rem;
+  }
+
+  .blog-posts {
+    grid-template-columns: 1fr; /* 1 column on small screens */
+  }
+
+  .post-title {
+    font-size: 1.5rem;
+  }
+
+  .post-description {
+    font-size: 0.9rem;
+  }
+
+  .new-post-link {
+    font-size: 1rem;
+  }
+}
+
+/* For Medium Screens (Tablet) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .header h1 {
+    font-size: 2.5rem; /* Medium-sized font for tablet */
+  }
+
+  .blog-posts {
+    grid-template-columns: 1fr 1fr; /* 2 columns for tablets */
+  }
+
+  .post-title {
+    font-size: 1.7rem;
+  }
+
+  .post-description {
+    font-size: 1rem;
+  }
+}
+
+/* For Large Screens (Desktop) */
+@media (min-width: 1024px) {
+  .header h1 {
+    font-size: 3rem; /* Larger font for desktop */
+  }
+
+  .header p {
+    font-size: 1.2rem;
+  }
+
+  .blog-posts {
+    grid-template-columns: 1fr 1fr 1fr; /* 3 columns for desktops */
+  }
+
+  .post-title {
+    font-size: 2rem;
+  }
+
+  .post-description {
+    font-size: 1.1rem;
+  }
+
+  .new-post-link {
+    font-size: 1.2rem;
+  }
+}
