@@ -6,6 +6,7 @@ const Blog = () => {
   const [purchases, setPurchases] = useState([]);
   const db = getFirestore();
 
+  // Fetch purchases
   useEffect(() => {
     const fetchPurchases = async () => {
       try {
@@ -21,7 +22,19 @@ const Blog = () => {
     };
 
     fetchPurchases();
-  }, [db]); // Ensure `db` dependency is included
+  }, [db]);
+
+  // Delete purchase
+  const handleDelete = async (id) => {
+    try {
+      await deleteDoc(doc(db, "purchases", id)); // Delete the document by ID
+      setPurchases((prevPurchases) => prevPurchases.filter((purchase) => purchase.id !== id)); // Update state
+      alert("Entry deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting entry: ", error);
+      alert("Failed to delete the entry. Please try again.");
+    }
+  };
 
   return (
     <div className="purchases-container">
@@ -36,6 +49,7 @@ const Blog = () => {
               <th>Age</th>
               <th>Location</th>
               <th>Plan</th>
+              <th>Actions</th> {/* New column for actions */}
             </tr>
           </thead>
           <tbody>
@@ -45,6 +59,14 @@ const Blog = () => {
                 <td>{purchase.age}</td>
                 <td>{purchase.location}</td>
                 <td>{purchase.plan}</td>
+                <td>
+                  <button
+                    className="delete-button"
+                    onClick={() => handleDelete(purchase.id)}
+                  >
+                    Delete
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
