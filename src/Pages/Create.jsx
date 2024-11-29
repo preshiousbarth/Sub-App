@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import picture from "../assets/DALL·E 2024-11-29 11.07.19 - A looping GIF showing a dark-themed, futuristic user interface for a sign-up page. The animation includes glowing neon blue and purple lights, floatin.webp";
-import { auth, provider } from "../Firebase/Firebase.config";
+import { auth } from "../Firebase/Firebase.config";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -25,23 +25,23 @@ const Signup = ({ setIsAuth }) => {
   const validateForm = () => {
     if (!username || !email || !password || !confirmPassword) {
       toast.error("Please, fill in all input fields.");
-      return false; 
+      return false;
     }
     if (password !== confirmPassword) {
       toast.error("Passwords do not match.");
-      return false; 
+      return false;
     }
     if (password.length < 6) {
       toast.error("Password must be at least 6 characters long.");
-      return false; 
+      return false;
     }
-    return true; 
+    return true;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validateForm()) return; 
+    if (!validateForm()) return;
 
     try {
       const { user } = await createUserWithEmailAndPassword(auth, email, password);
@@ -49,7 +49,7 @@ const Signup = ({ setIsAuth }) => {
       toast.success("Signup successful");
       localStorage.setItem("isAuth", true);
       setIsAuth(true);
-      setFormData(initialState); 
+      setFormData(initialState);
       navigate("/");
     } catch (error) {
       console.error(error);
@@ -73,102 +73,86 @@ const Signup = ({ setIsAuth }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value.trim() });
   };
 
-
-  
-
   return (
-    <>
-      <div className="signupPage">
-        <div className="w-full min-h-screen flex flex-col md:flex-row items-start">
-      
-          <div className="relative w-full md:w-1/2 h-64 md:h-full flex flex-col">
-            <img src={picture} className="w-full h-full object-cover pic" alt="Signup" />
-          </div>
-
-       
-          <motion.div
-            className="w-full md:w-1/2 h-auto flex flex-col p-8 md:p-28 justify-between"
-            variants={{
-              visible: { opacity: 1, y: 0 },
-              hidden: { opacity: 0, y: 75 },
-            }}
-            initial="hidden"
-            animate="visible"
-            transition={{ duration: 0.5, delay: 0.25 }}
-          >
-            <div className="w-full flex flex-col">
-              <div className="w-full flex flex-col mb-2">
-                <h3 className="text-xl md:text-4xl font-semibold mb-2">Signup</h3>
-                <p className="text-sm md:text-base mb-2">
-                  Welcome to our online family! Enter your credentials
-                </p>
-              </div>
-              <form onSubmit={handleSubmit}>
-                <div className="w-full flex flex-col">
-                  <input
-                    type="text"
-                    name="username"
-                    placeholder="Username"
-                    className="w-full text-black py-2 md:py-4 my-2 bg-transparent border-b border-black outline-none focus:outline-none"
-                    value={username}
-                    onChange={handleChange}
-                  />
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    className="w-full text-black py-2 md:py-4 my-2 bg-transparent border-b border-black outline-none focus:outline-none"
-                    value={email}
-                    onChange={handleChange}
-                  />
-                  <input
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    className="w-full text-black py-2 md:py-4 my-2 bg-transparent border-b border-black outline-none focus:outline-none"
-                    value={password}
-                    onChange={handleChange}
-                  />
-                  <input
-                    type="password"
-                    name="confirmPassword"
-                    placeholder="Confirm Password"
-                    className="w-full text-black py-2 md:py-4 my-2 bg-transparent border-b border-black outline-none focus:outline-none"
-                    value={confirmPassword}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="w-full flex flex-col my-4">
-                  <button
-                    type="submit"
-                    className="w-full text-white bg-gradient-to-r from-blue-600 to-blue-900  rounded-md py-3 md:py-4 text-center flex items-center justify-center"
-                  >
-                    Signup
-                  </button>
-                </div>
-              </form>
-            </div>
-
-            <GoogleBtn setIsAuth={setIsAuth} />
-
-            <div className="w-full flex items-center justify-center">
-              <p className="text-xs md:text-sm font-normal text-black">
-                Have an account?
-                <Link
-                  to="/login"
-                  className="font-semibold underline underline-offset-2 cursor-pointer"
-                >
-                  {" "}
-                  Click here
-                </Link>
-              </p>
-            </div>
-          </motion.div>
-        </div>
+    <div className="signupPage min-h-screen flex flex-col md:flex-row items-center bg-dark-bg text-dark-text">
+      {/* Left Side - Image */}
+      <div className="w-full md:w-1/2 h-64 md:h-auto">
+        <img
+          src={picture}
+          className="w-full h-full object-cover"
+          alt="Signup"
+        />
       </div>
-    </>
+
+      {/* Right Side - Form */}
+      <motion.div
+        className="w-full md:w-1/2 px-6 py-8 md:px-12 lg:px-20 flex flex-col justify-center"
+        variants={{
+          visible: { opacity: 1, y: 0 },
+          hidden: { opacity: 0, y: 75 },
+        }}
+        initial="hidden"
+        animate="visible"
+        transition={{ duration: 0.5, delay: 0.25 }}
+      >
+        <h3 className="text-2xl lg:text-4xl font-semibold mb-4">Signup</h3>
+        <p className="text-sm lg:text-base mb-6 text-dark-text">
+          Welcome to our online family! Enter your credentials to get started.
+        </p>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            className="w-full p-3 border-b border-gray-400 focus:outline-none bg-dark-bg text-dark-text"
+            value={username}
+            onChange={handleChange}
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            className="w-full p-3 border-b border-gray-400 focus:outline-none bg-dark-bg text-dark-text"
+            value={email}
+            onChange={handleChange}
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            className="w-full p-3 border-b border-gray-400 focus:outline-none bg-dark-bg text-dark-text"
+            value={password}
+            onChange={handleChange}
+          />
+          <input
+            type="password"
+            name="confirmPassword"
+            placeholder="Confirm Password"
+            className="w-full p-3 border-b border-gray-400 focus:outline-none bg-dark-bg text-dark-text"
+            value={confirmPassword}
+            onChange={handleChange}
+          />
+
+          <button
+            type="submit"
+            className="w-full py-3 bg-gradient-to-r from-primary-light to-primary-dark text-white rounded-md"
+          >
+            Signup
+          </button>
+        </form>
+
+        <GoogleBtn setIsAuth={setIsAuth} />
+
+        <p className="text-center mt-6 text-sm text-dark-text">
+          Have an account?{" "}
+          <Link to="/login" className="text-primary-light underline">
+            Click here
+          </Link>
+        </p>
+      </motion.div>
+    </div>
   );
 };
 
 export default Signup;
-

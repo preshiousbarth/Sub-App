@@ -4,7 +4,7 @@ import {
   collection,
   getDocs,
   deleteDoc,
-  doc, // Import `deleteDoc` and `doc` for deleting documents
+  doc,
 } from "firebase/firestore";
 import "../Pages/Blog.css";
 
@@ -12,7 +12,6 @@ const Blog = () => {
   const [purchases, setPurchases] = useState([]);
   const db = getFirestore();
 
-  // Fetch purchases
   useEffect(() => {
     const fetchPurchases = async () => {
       try {
@@ -30,57 +29,56 @@ const Blog = () => {
     fetchPurchases();
   }, [db]);
 
-  // Delete purchase
   const handleDelete = async (id) => {
     try {
-      console.log("Attempting to delete document with ID:", id); // Debugging
-      await deleteDoc(doc(db, "purchases", id)); // Delete the document by ID
-      console.log("Document deleted successfully.");
+      await deleteDoc(doc(db, "purchases", id));
       setPurchases((prevPurchases) =>
         prevPurchases.filter((purchase) => purchase.id !== id)
-      ); // Update state
+      );
       alert("Entry deleted successfully!");
     } catch (error) {
-      console.error("Error deleting entry:", error.message); // Log specific error
+      console.error("Error deleting entry:", error.message);
       alert("Failed to delete the entry. Please try again.");
     }
   };
 
   return (
-    <div className="purchases-container">
-      <h1>Purchased Plans</h1>
+    <div className="purchases-container p-4 md:p-8">
+      <h1 className="text-2xl md:text-4xl font-bold text-center mb-4">Purchased Plans</h1>
       {purchases.length === 0 ? (
-        <p>No purchases made yet!</p>
+        <p className="text-center text-lg md:text-xl">No purchases made yet!</p>
       ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>Username</th>
-              <th>Age</th>
-              <th>Location</th>
-              <th>Plan</th>
-              <th>Actions</th> {/* Column for delete actions */}
-            </tr>
-          </thead>
-          <tbody>
-            {purchases.map((purchase) => (
-              <tr key={purchase.id}>
-                <td>{purchase.username}</td>
-                <td>{purchase.age}</td>
-                <td>{purchase.location}</td>
-                <td>{purchase.plan}</td>
-                <td>
-                  <button
-                    className="delete-button"
-                    onClick={() => handleDelete(purchase.id)}
-                  >
-                    Delete
-                  </button>
-                </td>
+        <div className="overflow-x-auto">
+          <table className="table-auto border-collapse border border-gray-300 w-full">
+            <thead>
+              <tr className="bg-gray-200 text-sm md:text-lg">
+                <th className="border border-gray-300 px-4 py-2">Username</th>
+                <th className="border border-gray-300 px-4 py-2">Age</th>
+                <th className="border border-gray-300 px-4 py-2">Location</th>
+                <th className="border border-gray-300 px-4 py-2">Plan</th>
+                <th className="border border-gray-300 px-4 py-2">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {purchases.map((purchase) => (
+                <tr key={purchase.id} className="text-sm md:text-base hover:bg-gray-100">
+                  <td className="border border-gray-300 px-4 py-2">{purchase.username}</td>
+                  <td className="border border-gray-300 px-4 py-2">{purchase.age}</td>
+                  <td className="border border-gray-300 px-4 py-2">{purchase.location}</td>
+                  <td className="border border-gray-300 px-4 py-2">{purchase.plan}</td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    <button
+                      className="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded"
+                      onClick={() => handleDelete(purchase.id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

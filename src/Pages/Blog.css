@@ -131,3 +131,21 @@
     font-size: 1.2rem;
   }
 }
+
+
+@media (max-width: 768px) {
+  th, td {
+    font-size: 0.875rem; /* Smaller text for small screens */
+    padding: 6px;
+  }
+
+  .delete-button {
+    padding: 4px 8px;
+  }
+}
+
+@media (min-width: 768px) {
+  .delete-button {
+    padding: 8px 16px;
+  }
+}
