@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  deleteDoc,
+  doc, // Import `deleteDoc` and `doc` for deleting documents
+} from "firebase/firestore";
 import "../Pages/Blog.css";
 
 const Blog = () => {
@@ -27,11 +33,15 @@ const Blog = () => {
   // Delete purchase
   const handleDelete = async (id) => {
     try {
+      console.log("Attempting to delete document with ID:", id); // Debugging
       await deleteDoc(doc(db, "purchases", id)); // Delete the document by ID
-      setPurchases((prevPurchases) => prevPurchases.filter((purchase) => purchase.id !== id)); // Update state
+      console.log("Document deleted successfully.");
+      setPurchases((prevPurchases) =>
+        prevPurchases.filter((purchase) => purchase.id !== id)
+      ); // Update state
       alert("Entry deleted successfully!");
     } catch (error) {
-      console.error("Error deleting entry: ", error);
+      console.error("Error deleting entry:", error.message); // Log specific error
       alert("Failed to delete the entry. Please try again.");
     }
   };
@@ -49,7 +59,7 @@ const Blog = () => {
               <th>Age</th>
               <th>Location</th>
               <th>Plan</th>
-              <th>Actions</th> {/* New column for actions */}
+              <th>Actions</th> {/* Column for delete actions */}
             </tr>
           </thead>
           <tbody>
