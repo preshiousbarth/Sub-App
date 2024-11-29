@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import picture from "../assets/bc98c9dcc76893a46fc71f3920846a05.gif";
+import picture from "../assets/DALL·E 2024-11-29 11.07.19 - A looping GIF showing a dark-themed, futuristic user interface for a sign-up page. The animation includes glowing neon blue and purple lights, floatin.webp";
 import { auth, provider } from "../Firebase/Firebase.config";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
